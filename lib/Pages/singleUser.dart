@@ -30,13 +30,15 @@ class SingleUserPage extends StatelessWidget {
               );
             }
           },
-        ));
+        ),
+        );
   }
 
   Widget buildUser(User user) => ListTile(
         leading: CircleAvatar(child: Text('${user.age}')),
         title: Text(user.name),
         subtitle: Text('${user.number}'),
+        
       );
 
   Future<User?> readUser() async {
