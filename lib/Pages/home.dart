@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '../Widgets/sidebar.dart';
 import '../Pages/singleUser.dart';
+import '../Pages/update.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,7 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,10 +39,39 @@ class _HomePageState extends State<HomePage> {
         leading: CircleAvatar(child: Text('${user.age}')),
         title: Text(user.name),
         subtitle: Text('${user.number}'),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.edit,
+                size: 20.0,
+                color: Colors.brown[900],
+              ),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => UpdatePage(id: user.id),
+          ));
+              },
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.delete_outline,
+                size: 20.0,
+                color: Colors.brown[900],
+              ),
+              onPressed: () {
+                final docUser =
+                    FirebaseFirestore.instance.collection('users').doc(user.id);
+                docUser.delete();
+              },
+            ),
+          ],
+        ),
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => SingleUserPage(id: user.id),
-                ));
+            builder: (context) => SingleUserPage(id: user.id),
+          ));
         },
       );
 
