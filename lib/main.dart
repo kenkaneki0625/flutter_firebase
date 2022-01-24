@@ -31,43 +31,61 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final controller = TextEditingController();
+  final controllerName = TextEditingController();
+  final controllerAge = TextEditingController();
+  final controllerPhone = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: TextField(
-          controller: controller,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              final name = controller.text;
-              createUser(name: name);
-            },
-            icon: Icon(Icons.add),
-          )
+      appBar: AppBar(title: Text('Add User')),
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: <Widget>[
+          TextField(
+            controller: controllerName,
+            decoration: decoration('Name'),
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          TextField(
+            controller: controllerAge,
+            decoration: decoration('Age'),
+            keyboardType: TextInputType.number,
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          TextField(
+            controller: controllerPhone,
+            decoration: decoration('Number'),
+            keyboardType: TextInputType.number,
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          ElevatedButton(
+              onPressed: () {
+                final user = User(
+                  age: int.parse(controllerAge.text),
+                  name: controllerName.text,
+                  number: int.parse(controllerPhone.text),
+                );
+                createUser(user);
+              },
+              child: Text('Create'))
         ],
       ),
     );
   }
 
-  Future createUser({required String name}) async {
+  decoration(String name) => InputDecoration(hintText: name);
+
+  Future createUser(User user) async {
     final docUser = FirebaseFirestore.instance.collection('users').doc();
 
-    // final json = {
-    //   'name': name,
-    //   'age': 21,
-    //   'birthday': DateTime(2001, 7, 28),
-    // };
-
-    final user = User(
-      id: docUser.id,
-      name: name,
-      age: 21,
-      birthday: DateTime(2001, 7, 28),
-    );
+    user.id = docUser.id;
     final json = user.toJson();
     await docUser.set(json);
   }
@@ -77,19 +95,19 @@ class User {
   String id;
   final String name;
   final int age;
-  final DateTime birthday;
+  final int number;
 
   User({
     this.id = '',
     required this.name,
     required this.age,
-    required this.birthday,
+    required this.number,
   });
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
         'age': age,
-        'birthday': birthday,
+        'number': number,
       };
 }
