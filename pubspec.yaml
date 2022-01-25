@@ -15,6 +15,10 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   cloud_firestore: ^3.1.5
+  dio: ^4.0.0
+  flutter_polyline_points: ^0.2.6
+  google_maps_flutter: ^2.0.2
+
 
 dev_dependencies:
   flutter_test:
