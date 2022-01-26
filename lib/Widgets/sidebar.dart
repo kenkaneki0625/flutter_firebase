@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Pages/home.dart';
 import '../Pages/write.dart';
 import '../Widgets/maps.dart';
+import '../Pages/mylocation.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
@@ -34,6 +35,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                     text: 'Google Maps',
                     icon: Icons.people,
                     onClicked: () => selectedItem(context, 2),
+                  ),
+                  const SizedBox(height: 10),
+                  buildMenuItem(
+                    text: 'My Location',
+                    icon: Icons.people,
+                    onClicked: () => selectedItem(context, 3),
                   ),
                 ],
               ),
@@ -78,6 +85,11 @@ class NavigationDrawerWidget extends StatelessWidget {
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => MapsScreen(),
+        ));
+        break;
+      case 3:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => MyLocation(),
         ));
         break;
     }

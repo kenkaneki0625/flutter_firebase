@@ -20,6 +20,8 @@ dependencies:
   google_maps_flutter: ^2.0.2
   http: ^0.13.4
   geolocator: ^8.0.5
+  geocoding:
+  fluttertoast:
 
 
 dev_dependencies:
